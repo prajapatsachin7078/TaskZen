@@ -25,10 +25,12 @@ userRouter.post("/signup", async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: "Email is already registered. Please use a different one." });
         }
-
+        // Generating the salt using salt-rounds
+        const salt = await bcrypt.genSalt(SALT_ROUNDS);
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
+        const hashedPassword = await bcrypt.hash(password, salt);
+        console.log("hashed with salt: " ,hashedPassword);
+        
         // Create and save the new user
         const user = new User({ name, email, password: hashedPassword });
         const savedUser = await user.save();
@@ -51,7 +53,7 @@ userRouter.post("/signin", async (req, res) => {
             return res.status(404).json({ message: "You're not registered. Sign up first!" });
         }
 
-        // Compare the hashed password
+        // Compare the hashed password with the users password..
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         
         if (!isPasswordCorrect) {
@@ -65,6 +67,7 @@ userRouter.post("/signin", async (req, res) => {
         res.status(200)
             .json({ message: "Login successful" ,token,userName: user.name});
     } catch (error) {
+        
         res.status(500).json({ message: "Error. Try again!", error });
     }
 });

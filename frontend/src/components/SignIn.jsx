@@ -1,38 +1,38 @@
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
+// import PropTypes from 'prop-types'
 
-function SignIn({ handleLoggedIn, setUserName }) {
+function SignIn(props) {
+  const { handleLoggedIn, handleUserNameUpdate } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:3000/signin", {
+      axios.post("http://localhost:3000/signin", {
         email,
         password,
-      });
-
-      const { token, userName } = response.data;
-      // Save the token and username in localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("userName", userName);
-
-      // Update state and props
-      handleLoggedIn(true);
-      setUserName(userName);
-
-      // Navigate to the Todo component
-      navigate("/todos");
-    } catch (error) {
-      navigate("/signup");
-      alert("Sign up first, You're not registered..");
-      
-    }
-  };
+      })
+      .then((response)=>{   
+        const { token, userName } = response.data;
+        // Save the token and username in localStorage
+        localStorage.setItem("token", token);
+        localStorage.setItem("userName", userName);
+        // Update state and props
+        handleLoggedIn(true);
+        handleUserNameUpdate(userName);
+        // Navigate to the Todo component
+        navigate("/todos");
+      })
+      .catch((error)=> {
+        console.log("Error: " ,error);
+        navigate("/signup");
+        alert("Sign up first, You're not registered..");
+      })
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -77,4 +77,9 @@ function SignIn({ handleLoggedIn, setUserName }) {
   );
 }
 
-export default SignIn;
+// SignIn.propTypes = {
+//   handleLoggedIn: PropTypes.func.isRequired, // Define the prop type for handleLoggedIn
+//   setUserName: PropTypes.func.isRequired  // Define the prop type for setUserName
+// };
+
+export default SignIn;  

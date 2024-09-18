@@ -12,13 +12,13 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Ensure the state is synced with localStorage on mount
+    // Ensuring the state is synced with localStorage on mount
     const storedUserName = localStorage.getItem("userName");
     const token = localStorage.getItem("token");
     setUserName(storedUserName || "");
     setLoggedIn(!!token);
 
-  }, [navigate]);
+  }, []);
 
   function handleLoggedIn(status) {
     setLoggedIn(status);
@@ -40,8 +40,13 @@ function App() {
     <div>
       <Navbar isLoggedIn={isLoggedIn} userName={userName} onLogout={onLogout} />
       <Routes>
-        <Route path="/signin" element={<SignIn handleLoggedIn={handleLoggedIn} setUserName={handleUserNameUpdate} />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route 
+          path="/signin" 
+          element={<SignIn 
+                  handleLoggedIn={handleLoggedIn} 
+                  handleUserNameUpdate ={handleUserNameUpdate}
+        />} />
+        <Route path="/signup" element={isLoggedIn ? <Todo /> : <SignUp />} />
         <Route path="/todos" element={isLoggedIn ? <Todo /> : <SignIn />} />
         <Route path="/" element={isLoggedIn ? <Todo /> : <SignIn />} /> {/* Default route */}
       </Routes>
