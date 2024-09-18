@@ -5,12 +5,13 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Home from './components/Home';
 
 function App() {
   const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
   const [isLoggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const navigate = useNavigate();
-
+  console.log("App.jsx")
   useEffect(() => {
     // Ensuring the state is synced with localStorage on mount
     const storedUserName = localStorage.getItem("userName");
@@ -33,22 +34,24 @@ function App() {
     localStorage.removeItem("userName");
     setLoggedIn(false);
     setUserName("");
-    navigate("/signin"); // Redirect to SignIn page
+    navigate("/"); // Redirect to SignIn page
   }
 
   return (
     <div>
       <Navbar isLoggedIn={isLoggedIn} userName={userName} onLogout={onLogout} />
       <Routes>
-        <Route 
+        <Route
           path="/signin" 
           element={<SignIn 
                   handleLoggedIn={handleLoggedIn} 
                   handleUserNameUpdate ={handleUserNameUpdate}
         />} />
+        {console.log("App.js - handleLoggedIn:", handleLoggedIn)}
+        {console.log("App.js - handleUserNameUpdate:", handleUserNameUpdate)}
         <Route path="/signup" element={isLoggedIn ? <Todo /> : <SignUp />} />
         <Route path="/todos" element={isLoggedIn ? <Todo /> : <SignIn />} />
-        <Route path="/" element={isLoggedIn ? <Todo /> : <SignIn />} /> {/* Default route */}
+        <Route path="/" element={isLoggedIn ? <Todo />:<Home/>} /> {/*Default route*/}
       </Routes>
     </div>
   );

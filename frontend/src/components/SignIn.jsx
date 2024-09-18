@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 function SignIn(props) {
   const { handleLoggedIn, handleUserNameUpdate } = props;
+  console.log("SignIn.js: " ,handleLoggedIn," " , handleUserNameUpdate);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
