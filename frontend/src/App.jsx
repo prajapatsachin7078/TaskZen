@@ -18,7 +18,7 @@ function App() {
     setUserName(storedUserName || "");
     setLoggedIn(!!token);
 
-  }, []);
+  },[]);
 
   function handleLoggedIn(status) {
     setLoggedIn(status);
