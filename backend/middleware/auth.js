@@ -11,7 +11,7 @@ function userAuthMiddleware(req, res, next) {
     
     if (authHeader) {
         // Extract token from header
-        const token = authHeader.split(' ')[1]; // Remove 'Bearer' part if using Bearer tokens
+        const token = authHeader.split(' ')[1];
 
         try {
             // Verify the token and extract the userId

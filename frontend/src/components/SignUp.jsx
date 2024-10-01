@@ -5,21 +5,19 @@ import { Link, useNavigate } from 'react-router-dom';
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name,setName] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
     try {
-      
       const response = await axios.post("http://localhost:3000/signup", {
         name,
         email,
         password,
       });
       alert(response.data.message)
-      // Navigate to the Todo component
+      // Navigate to the Signin component
       navigate("/signin");
     } catch (error) {
       console.log("Sign up failed", error);
@@ -66,7 +64,7 @@ function SignUp() {
           </div>
           <button
             onClick={handleSignUp}
-           type="submit" className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            type="submit" className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             Sign Up
           </button>
         </form>

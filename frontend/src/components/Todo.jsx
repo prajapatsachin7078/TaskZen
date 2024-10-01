@@ -47,7 +47,7 @@ function Todo() {
     }
     return (
       <div className=' h-[90vh] mt-4'>
-        <div className="container border w-[50vw] rounded-md mx-auto p-4">
+        <div className="container border max-w-[600px] rounded-md mx-auto p-4">
           <CreateTask getTodos={updateTodos}/>
           <div className='border-y py-2 mt-3 w-[100%] flex justify-between'>
             <span className='content-center text-white'>Category:   </span>

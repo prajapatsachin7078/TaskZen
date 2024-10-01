@@ -2,23 +2,21 @@
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
-// import PropTypes from 'prop-types'
+
 
 function SignIn(props) {
   const { handleLoggedIn, handleUserNameUpdate } = props;
-  console.log("SignIn.js: " ,handleLoggedIn," " , handleUserNameUpdate);
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-      axios.post("http://localhost:3000/signin", {
-        email,
-        password,
-      })
-      .then((response)=>{   
+    axios.post("http://localhost:3000/signin", {
+      email,
+      password,
+    })
+      .then((response) => {
         const { token, userName } = response.data;
         // Save the token and username in localStorage
         localStorage.setItem("token", token);
@@ -29,8 +27,8 @@ function SignIn(props) {
         // Navigate to the Todo component
         navigate("/todos");
       })
-      .catch((error)=> {
-        console.log("Error: " ,error);
+      .catch((error) => {
+        console.log("Error: ", error);
         navigate("/signup");
         alert("Sign up first, You're not registered..");
       })
@@ -63,9 +61,9 @@ function SignIn(props) {
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
-          <button 
+          <button
             onClick={handleSignIn}
-            type="submit" 
+            type="submit"
             className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Sign In
@@ -78,10 +76,5 @@ function SignIn(props) {
     </div>
   );
 }
-
-// SignIn.propTypes = {
-//   handleLoggedIn: PropTypes.func.isRequired, // Define the prop type for handleLoggedIn
-//   setUserName: PropTypes.func.isRequired  // Define the prop type for setUserName
-// };
 
 export default SignIn;  

@@ -21,9 +21,9 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
+    <div className="min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl font-extrabold mb-4">Welcome to the Todo App</h1>
-      <p className="text-lg mb-8">{messages[currentMessage]}</p>
+      <p className="text-lg mb-8">{messages[currentMessage]} <span className='animate-bounce'>📓</span></p>
       
       <div className="flex space-x-4">
         <Link to="/signup">

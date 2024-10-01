@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/todoapp');
+mongoose.connect('mongodb://localhost:27017/test');
 
 // Define schemas
 

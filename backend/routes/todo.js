@@ -7,10 +7,6 @@ todoRouter.post('/', userAuthMiddleware, async (req, res) => {
     const userId = req.user;
     const { task,category} = req.body.task;
 
-    // console.log("task:", task);
-    // console.log("category:", category);
-    // console.log("userId:", userId);
-
     if (!task || !category || !userId) {
         return res.status(400).json({ message: "Missing required fields" });
     }
@@ -18,7 +14,7 @@ todoRouter.post('/', userAuthMiddleware, async (req, res) => {
     try {
         const todo = new Todo({ task, category, userId });
         const savedTask = await todo.save();
-        console.log(savedTask);
+        // console.log(savedTask);
 
         const todos = await Todo.find({ userId });
         res.json({ message: "Task created successfully!", user: savedTask, todos });
@@ -87,7 +83,7 @@ todoRouter.get("/:category",userAuthMiddleware,async (req,res)=>{
           });
         res.json({message: "Gotten selected category..",todos})
     }catch(err){
-        console.log(err);
+        // console.log(err);
         res.status(404).json({message: "Some error... in fetching category wise list"})
     }
     

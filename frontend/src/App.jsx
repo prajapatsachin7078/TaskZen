@@ -11,7 +11,6 @@ function App() {
   const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
   const [isLoggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const navigate = useNavigate();
-  console.log("App.jsx")
   useEffect(() => {
     // Ensuring the state is synced with localStorage on mount
     const storedUserName = localStorage.getItem("userName");
@@ -19,7 +18,7 @@ function App() {
     setUserName(storedUserName || "");
     setLoggedIn(!!token);
 
-  },[]);
+  }, []);
 
   function handleLoggedIn(status) {
     setLoggedIn(status);
@@ -42,16 +41,14 @@ function App() {
       <Navbar isLoggedIn={isLoggedIn} userName={userName} onLogout={onLogout} />
       <Routes>
         <Route
-          path="/signin" 
-          element={<SignIn 
-                  handleLoggedIn={handleLoggedIn} 
-                  handleUserNameUpdate ={handleUserNameUpdate}
-        />} />
-        {console.log("App.js - handleLoggedIn:", handleLoggedIn)}
-        {console.log("App.js - handleUserNameUpdate:", handleUserNameUpdate)}
+          path="/signin"
+          element={<SignIn
+            handleLoggedIn={handleLoggedIn}
+            handleUserNameUpdate={handleUserNameUpdate}
+          />} />
         <Route path="/signup" element={isLoggedIn ? <Todo /> : <SignUp />} />
         <Route path="/todos" element={isLoggedIn ? <Todo /> : <SignIn />} />
-        <Route path="/" element={isLoggedIn ? <Todo />:<Home/>} /> {/*Default route*/}
+        <Route path="/" element={isLoggedIn ? <Todo /> : <Home />} /> {/*Default route*/}
       </Routes>
     </div>
   );

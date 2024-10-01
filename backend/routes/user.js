@@ -1,8 +1,9 @@
-const { Router } = require("express");
+const { Router, response } = require("express");
 const { User } = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
+
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -22,22 +23,30 @@ userRouter.post("/signup", async (req, res) => {
     try {
         // Check if the email already exists
         const existingUser = await User.findOne({ email });
+        // console.log("Existing: ", existingUser);
+
         if (existingUser) {
             return res.status(400).json({ message: "Email is already registered. Please use a different one." });
         }
+
         // Generating the salt using salt-rounds
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, salt);
-        console.log("hashed with salt: " ,hashedPassword);
-        
+
         // Create and save the new user
-        const user = new User({ name, email, password: hashedPassword });
-        const savedUser = await user.save();
+        const savedUser = await User.create({ name, email, password: hashedPassword });
+        // console.log(savedUser);
 
         res.json({ message: "User created successfully!", user: savedUser });
     } catch (err) {
-        console.log(err);
+        // Log the error for debugging
+        console.error(err);
+        
+        // Check for duplicate key error
+        if (err.code === 11000) {
+            return res.status(400).json({ message: "Email is already registered. Please use a different one." });
+        }
         res.status(500).json({ message: "User couldn't be created... Error!", error: err });
     }
 });

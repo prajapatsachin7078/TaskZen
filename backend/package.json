@@ -4,6 +4,8 @@
   "description": "todo app all crud operations",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev" : "nodemon index.js",
     "test": "zest"
   },
   "author": "sachin",

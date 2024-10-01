@@ -41,16 +41,16 @@ function CreateTask({getTodos}) {
         }
       };
   return (
-    <div className="flex justify-center">
+    <div className="md:flex  sm-flex justify-center">
           <input 
             type="text" 
             placeholder="Add new task" 
             value={task}
-            className="border border-gray-300 rounded-md px-2 w-80" 
+            className="border border-gray-300 rounded-md px-2 max-w-7xl" 
             onChange={handleInputChange}
           />
           <select 
-            className="border border-gray-300 rounded-md px-2 w-70 mx-2" 
+            className="border border-gray-300 rounded-md px-2 sm:min-w-2 mx-2" 
             value={category} // Bind category value to select input
             onChange={handleCategoryChange} // Handle category change
           >
