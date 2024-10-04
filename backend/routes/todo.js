@@ -5,14 +5,14 @@ const { userAuthMiddleware } = require("../middleware/auth");
 const todoRouter = Router();
 todoRouter.post('/', userAuthMiddleware, async (req, res) => {
     const userId = req.user;
-    const { task,category} = req.body.task;
+    const { task, category, priority } = req.body.task;
 
     if (!task || !category || !userId) {
         return res.status(400).json({ message: "Missing required fields" });
     }
 
     try {
-        const todo = new Todo({ task, category, userId });
+        const todo = new Todo({ task, category, userId, priority });
         const savedTask = await todo.save();
         // console.log(savedTask);
 

@@ -1,61 +1,74 @@
 import axios from 'axios';
-function List({ todos,getTodos }) {
-  // Delete handler
-  const handleDelete=(taskId)=>{
+import { FaTrashAlt, FaCheckCircle, FaExclamationCircle, FaFlag,} from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
-      axios.delete("http://localhost:3000/todos", {
-          data: { taskId },
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}` // Send token in Authorization header
-          }
-      })      
-      .then(res=>{
-          alert(res.data.message);
-          getTodos(res.data.todos);
-      })  
-      .catch(err=>{
-          alert(err.message);
-      })
-  }
-  // Status handler
-  const toggleComplete =(taskId)=>{
-    axios.put("http://localhost:3000/todos",{
-      taskId
-    },
-    {
+
+
+function List({ todos, getTodos }) {
+  const handleDelete = (taskId) => {
+    axios.delete("http://localhost:3000/todos", {
+      data: { taskId },
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}` // Send token in Authorization header
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
-    }
-  ).then(res=>{
-      if(res.data.status){
-        alert(res.data.message); 
-      }
-      getTodos(res.data.list)})
-    .catch(err=>alert(err));
-  }
-  return (
-  <div className="my-4  border-gray-300 ">
-    <ul className="list-disc w-[100%] max-h-80 p-4  mt-4 overflow-y-auto">
-      {
-        todos && todos.map((todo, index) => (
-          <li key={index} className="flex justify-between items-center mb-2 bg-blue-500 p-2 rounded-md">
-            <div className="flex space-x-2">
-              <span 
-                onClick={() => toggleComplete(todo._id)} // Call a function to toggle the todo state
-                className={`border rounded-full w-6 border-black cursor-pointer text-lg ${todo.isCompleted?"bg-green-500":""}`}>
-                
-              </span>
+    })  
+      .then(res => {
+        toast.success(res.data.message);
+        getTodos(res.data.todos);
+      })
+      .catch(err => {
+        toast.error(err.message);
+      });
+  };
 
-              <span className={` ${todo.isCompleted?"line-through":""}`}>{todo.task}</span>
-            </div>
-            <div className="flex space-x-2">
-              <span onClick={()=>{handleDelete(todo._id)}} className="text-lg cursor-pointer">❌</span>
-            </div>
-          </li>
-        ))
+  const toggleComplete = (taskId) => {
+    axios.put("http://localhost:3000/todos", { taskId }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
-    </ul>
+    })
+      .then(res => {
+        if (res.data.status) {
+          toast.success(res.data.message);
+        }
+        getTodos(res.data.list);
+      })
+      .catch(err => toast.error(err.message));
+  };
+
+  return (
+    
+    <div className="my-4 border-gray-300">
+      <ul className="list-disc w-full max-h-80 p-4 mt-4 overflow-y-auto">
+        {
+          todos && todos.map((todo, index) => (
+            <li key={index} className={`flex justify-between items-center mb-2 p-2 rounded-md ${todo.priority === 'High' ? 'bg-red-300' : todo.priority === 'Medium' ? 'bg-yellow-300' : 'bg-green-300'}`}>
+              <div className="flex items-center space-x-2">
+                <span
+                  onClick={() => toggleComplete(todo._id)}
+                  className={`cursor-pointer text-lg ${todo.isCompleted ? "text-green-600" : "text-gray-500"}`}
+                >
+                  {todo.isCompleted ? <FaCheckCircle /> : <FaExclamationCircle />}
+                </span>
+
+                <span className={`flex-grow ${todo.isCompleted ? "line-through" : ""}`}>{todo.task}</span>
+                
+              </div>
+              <div className=''>
+
+                {todo.priority === 'High' && <FaFlag className="text-red-500" />}
+                {todo.priority === 'Medium' && <FaFlag className="text-yellow-500" />}
+                {todo.priority === 'Low' && <FaFlag className="text-green-500" />}
+              </div>
+              <div className="flex space-x-2">
+                <span onClick={() => { handleDelete(todo._id) }} className="text-lg cursor-pointer text-red-600 hover:text-red-800">
+                  <FaTrashAlt />
+                </span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   );
 }

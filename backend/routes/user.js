@@ -14,7 +14,6 @@ const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS);  // Parse salt rounds as 
 // Sign up route
 userRouter.post("/signup", async (req, res) => {
     const { name, email, password } = req.body;
-
     // Check if all required fields are present
     if (!name || !email || !password) {
         return res.status(400).json({ message: "All fields (name, email, and password) are required!" });

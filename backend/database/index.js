@@ -1,29 +1,33 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/test');
+(async () => {
+    await mongoose.connect(process.env.MONGO_URI);
+})();
+
 
 // Define schemas
 
 const UserSchema = new mongoose.Schema({
     // Schema definition here
-    name:{
+    name: {
         type: String,
         require: true,
     },
-    email:{
+    email: {
         type: String,
-        require : true,
+        require: true,
         unique: true // Ensures that each username is unique
     },
-    password:{
+    password: {
         type: String,
         require: true
     }
 });
 
 const TodoSchema = new mongoose.Schema({
-    category:{
+    category: {
         type: String,
         required: true
     },
@@ -44,6 +48,12 @@ const TodoSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,  // Store the user's ObjectId
         required: true,  // Ensure that every todo is associated with a user
         ref: 'User'  // This references the User model (though we are not enforcing relationships)
+    },
+    priority: {
+        type: String,
+        enum: ['Low', 'Medium', 'High'],
+        default: 'Low', // Default priority if none is set
+        required: true // Ensure that every todo has a priority
     }
 }, {
     timestamps: true // Automatically creates `createdAt` and `updatedAt` fields
