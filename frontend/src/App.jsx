@@ -9,6 +9,8 @@ import SignIn from './components/auth/SignIn';
 import Todo from './components/pages/Todo';
 import LearnMore from './components/pages/LearnMore';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const [userName, setUserName] = useState(localStorage.getItem("userName") || "");

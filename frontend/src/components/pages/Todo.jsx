@@ -7,7 +7,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the app element for accessibility
 
 function Todo() {
-  const [category, setCategory] = useState('My Day');
+  const [category, setCategory] = useState('All');
   const [todos, setTodos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { FaStar,FaTrashAlt, FaCheckCircle, FaExclamationCircle, FaFlag, FaStarAndCrescent, FaStarOfLife, FaStackOverflow, FaTags, FaFlagCheckered } from 'react-icons/fa';
+import { FaTrashAlt, FaCheckCircle, FaExclamationCircle, FaFlag,} from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+
 
 function List({ todos, getTodos }) {
   const handleDelete = (taskId) => {
