@@ -105,15 +105,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For inquiries or feedback, you can reach me at [your.email@example.com](mailto:prajapatsachin7078@gmail.com).
+For inquiries or feedback, you can reach me at [sachin](mailto:prajapatsachin7078@gmail.com).
 
 ---
 
 Thank you for checking out TaskZen! Happy task managing! 🎉
 ```
-
-### Customization
-
-1. Replace `https://github.com/prajapatsachin7078/taskzen.git` with the actual URL of your repository.
-2. Update the contact email and any other specific details about your application as needed.
-3. You might want to add screenshots or a demo link to showcase the application visually.
