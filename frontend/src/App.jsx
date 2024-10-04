@@ -1,11 +1,14 @@
-import Todo from './components/Todo';
 import './App.css';
-import Navbar from './components/Navbar';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Home from './components/Home';
+import Home from './components/pages/Home';
+import Navbar from './components/shared/Navbar';
+import SignUp from './components/auth/SignUp';
+import SignIn from './components/auth/SignIn';
+import Todo from './components/pages/Todo';
+import LearnMore from './components/pages/LearnMore';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
@@ -39,6 +42,7 @@ function App() {
   return (
     <div>
       <Navbar isLoggedIn={isLoggedIn} userName={userName} onLogout={onLogout} />
+      <ToastContainer />
       <Routes>
         <Route
           path="/signin"
@@ -48,7 +52,8 @@ function App() {
           />} />
         <Route path="/signup" element={isLoggedIn ? <Todo /> : <SignUp />} />
         <Route path="/todos" element={isLoggedIn ? <Todo /> : <SignIn />} />
-        <Route path="/" element={isLoggedIn ? <Todo /> : <Home />} /> {/*Default route*/}
+        <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>} /> {/*Default route*/}
+        <Route path='/learn-more' element={<LearnMore/>}/>
       </Routes>
     </div>
   );

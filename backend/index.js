@@ -17,6 +17,7 @@ app.get("/",(req,res)=>{
 app.use("/",userRouter);
 
 app.use("/todos",todoRouter)
+
 app.listen(3000,()=>{
     console.log("Server is running...")
 });
