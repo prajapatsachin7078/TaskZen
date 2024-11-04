@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import List from '../List';
 import CreateTask from '../CreateTask';
 import Modal from 'react-modal';
+import { BACKEND_API_URI } from '../../util/uri';
 
 Modal.setAppElement('#root'); // Set the app element for accessibility
 
@@ -26,7 +27,7 @@ function Todo() {
   const fetchTodos = async (selectedCategory) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get(`http://localhost:3000/todos/${selectedCategory}`, {
+      const response = await axios.get(`${BACKEND_API_URI}/todos/${selectedCategory}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

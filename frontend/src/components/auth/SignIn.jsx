@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
+import { BACKEND_API_URI } from '../../util/uri';
 
 
 function SignIn(props) {
@@ -12,7 +13,7 @@ function SignIn(props) {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/signin", {
+    axios.post(`${BACKEND_API_URI}/signin`, {
       email,
       password,
     })

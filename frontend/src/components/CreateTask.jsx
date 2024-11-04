@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { BACKEND_API_URI } from '../util/uri';
 
 function CreateTask({ getTodos, closeModal }) {
   const [task, setTask] = useState('');
@@ -31,7 +32,7 @@ function CreateTask({ getTodos, closeModal }) {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/todos", data, {
+      const response = await axios.post(`${BACKEND_API_URI}/todos`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }

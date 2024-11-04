@@ -1,39 +1,46 @@
 import axios from 'axios';
 import { FaTrashAlt, FaCheckCircle, FaExclamationCircle, FaFlag,} from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { BACKEND_API_URI } from '../util/uri';
 
 
 
 function List({ todos, getTodos }) {
   const handleDelete = (taskId) => {
-    axios.delete("http://localhost:3000/todos", {
-      data: { taskId },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    })  
-      .then(res => {
+    axios
+      .delete(`${BACKEND_API_URI}/todos`, {
+        data: { taskId },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then((res) => {
         toast.success(res.data.message);
         getTodos(res.data.todos);
       })
-      .catch(err => {
+      .catch((err) => {
         toast.error(err.message);
       });
   };
 
   const toggleComplete = (taskId) => {
-    axios.put("http://localhost:3000/todos", { taskId }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    })
-      .then(res => {
+    axios
+      .put(
+        `${BACKEND_API_URI}/todos`,
+        { taskId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      )
+      .then((res) => {
         if (res.data.status) {
           toast.success(res.data.message);
         }
         getTodos(res.data.list);
       })
-      .catch(err => toast.error(err.message));
+      .catch((err) => toast.error(err.message));
   };
 
   return (
