@@ -1,1 +1,1 @@
-export const BACKEND_API_URI = "http://localhost:3000";
+export const BACKEND_API_URI = "https://taskzen-yibx.onrender.com";
